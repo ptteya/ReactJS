@@ -1,0 +1,22 @@
+.book-item {
+    font-weight: lighter;
+}
+
+.title {
+    font-size: 30px;
+}
+
+.highlight-button {
+    background-color: blue;
+    color: white;
+    margin-right: 10px;
+    padding: 5px;
+    border: none;
+}
+
+.delete-button {
+    background-color: red;
+    color: white;
+    padding: 5px;
+    border: none;
+}

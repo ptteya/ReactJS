@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import { BookList } from './components/BookList';
+import { CharacterList } from './components/CharacterList';
 import './App.css';
 
 function App() {
@@ -45,10 +45,14 @@ function App() {
       "description": "With Learning JavaScript Design Patterns, you'll learn how to write beautiful, structured, and maintainable JavaScript by applying classical and modern design patterns to the language. If you want to keep your code efficient, more manageable, and up-to-date with the latest best practices, this book is for you.",
     },
   ]
+
   return (
     <div className="App">
       <header className="App-header">
         <BookList books={books} />
+
+        <CharacterList />
+
       </header>
     </div>
   );
