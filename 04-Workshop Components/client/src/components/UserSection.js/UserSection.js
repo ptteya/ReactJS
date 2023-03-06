@@ -61,6 +61,47 @@ export const UserSection = () => {
       })
   }
 
+  const userEditHandler = (e, userId) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const {
+      firstName,
+      lastName,
+      email,
+      imageUrl,
+      phoneNumber,
+      ...address
+    } = Object.fromEntries(formData);
+
+    const userData = {
+      firstName,
+      lastName,
+      email,
+      imageUrl,
+      phoneNumber,
+      address
+    }
+
+    // console.log(userData);
+
+    userService.edit(userId, userData)
+      .then(user => {
+        console.log(user);
+        closeHandler()
+      })
+  }
+
+  const userDeleteHandler = (e, userId) => {
+    e.preventDefault();
+
+    userService.deleteUser(userId)
+      .then(result => {
+        console.log(result)
+        closeHandler();
+      })
+  }
+
   return (
     <>
       <div className="table-wrapper">
@@ -78,6 +119,7 @@ export const UserSection = () => {
           <UserEdit
             user={userAction.user}
             onClose={closeHandler}
+            onEdit={userEditHandler}
           />
         }
 
@@ -85,6 +127,7 @@ export const UserSection = () => {
           <UserDelete
             user={userAction.user}
             onClose={closeHandler}
+            onDelete={userDeleteHandler}
           />
         }
 

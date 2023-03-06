@@ -28,3 +28,32 @@ export const create = async (userData) => {
 
     return result.user;
 }
+
+export const edit = async (userId, userData) => {
+    console.log(userData)
+    const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'PUT',
+        header: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    });
+
+    const result = await response.json();
+
+    console.log(result);
+
+    return result.user;
+}
+
+export const deleteUser = async (userId) => {
+    const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'DELETE'
+    });
+
+    const result = await response.json();
+
+    console.log(result);
+
+    return result;
+}   
