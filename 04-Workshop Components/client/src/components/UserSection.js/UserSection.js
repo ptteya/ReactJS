@@ -28,76 +28,39 @@ export const UserSection = () => {
       });
   }
 
+  const createUserOpenHandler = () => {
+    setUserAction({
+      action: UserActions.Add
+    });
+  }
+
   const closeHandler = () => {
     setUserAction({ user: null, action: null });
   }
 
-  const userCreateHandler = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const {
-      firstName,
-      lastName,
-      email,
-      imageUrl,
-      phoneNumber,
-      ...address
-    } = Object.fromEntries(formData);
-
-    const userData = {
-      firstName,
-      lastName,
-      email,
-      imageUrl,
-      phoneNumber,
-      address
-    }
-
+  const userCreateHandler = (userData) => {
     userService.create(userData)
       .then(user => {
         setUsers(oldUsers => [...oldUsers, user]);
         closeHandler();
       })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  const userEditHandler = (e, userId) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const {
-      firstName,
-      lastName,
-      email,
-      imageUrl,
-      phoneNumber,
-      ...address
-    } = Object.fromEntries(formData);
-
-    const userData = {
-      firstName,
-      lastName,
-      email,
-      imageUrl,
-      phoneNumber,
-      address
-    }
-
-    // console.log(userData);
-
+  const userEditHandler = (userId, userData) => {
     userService.edit(userId, userData)
       .then(user => {
-        console.log(user);
+        setUsers(oldUsers => [...oldUsers.map(x => x._id !== userId ? x : user)]);
         closeHandler()
       })
   }
 
-  const userDeleteHandler = (e, userId) => {
-    e.preventDefault();
-
+  const userDeleteHandler = (userId) => {
     userService.deleteUser(userId)
-      .then(result => {
-        console.log(result)
+      .then(user => {
+        setUsers(oldUsers => [...oldUsers.filter(x => x._id !== userId)]);
         closeHandler();
       })
   }
@@ -119,7 +82,7 @@ export const UserSection = () => {
           <UserEdit
             user={userAction.user}
             onClose={closeHandler}
-            onEdit={userEditHandler}
+            onUserEdit={userEditHandler}
           />
         }
 
@@ -127,7 +90,7 @@ export const UserSection = () => {
           <UserDelete
             user={userAction.user}
             onClose={closeHandler}
-            onDelete={userDeleteHandler}
+            onUserDelete={() => userDeleteHandler(userAction.user._id)}
           />
         }
 
@@ -199,7 +162,6 @@ export const UserSection = () => {
                 <UserItem
                   user={user}
                   onActionClick={userActionClickHandler}
-                  onUserCreate={userCreateHandler}
                 />
               </tr>
             )}
@@ -207,7 +169,7 @@ export const UserSection = () => {
         </table>
       </div>
 
-      <button className="btn-add btn" onClick={() => userActionClickHandler(null, UserActions.Add)}>Add new user</button>
+      <button className="btn-add btn" onClick={createUserOpenHandler}>Add new user</button>
     </>
   );
 }

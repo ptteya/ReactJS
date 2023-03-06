@@ -1,7 +1,7 @@
 export const UserDelete = ({
     user,
     onClose,
-    onDelete
+    onUserDelete
 }) => {
     return (
         <div className="overlay">
@@ -21,7 +21,7 @@ export const UserDelete = ({
                     </header>
                     <div className="actions">
                         <div id="form-actions">
-                            <button id="action-save" className="btn" type="submit" onClick={(e) => onDelete(e, user._id)}>Delete</button>
+                            <button id="action-save" className="btn" type="submit" onClick={onUserDelete}>Delete</button>
                             <button id="action-cancel" className="btn" type="button"
                                 onClick={onClose}
                             >

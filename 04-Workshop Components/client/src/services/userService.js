@@ -24,26 +24,31 @@ export const create = async (userData) => {
         body: JSON.stringify(userData)
     });
 
-    const result = await response.json();
+    if (response.ok) {
+        const result = await response.json();
 
-    return result.user;
+        return result.user;
+    } else {
+        throw { message: 'Unable to create user' };
+    }
 }
 
 export const edit = async (userId, userData) => {
-    console.log(userData)
     const response = await fetch(`${baseUrl}/${userId}`, {
         method: 'PUT',
-        header: {
-            'content-type': 'application/json'
+        headers: {
+            'content-type': 'application/json',
         },
         body: JSON.stringify(userData)
     });
 
-    const result = await response.json();
+    if (response.ok) {
+        const result = await response.json();
 
-    console.log(result);
-
-    return result.user;
+        return result.user;
+    } else {
+        throw { message: 'Unable to edit user' };
+    }
 }
 
 export const deleteUser = async (userId) => {
@@ -51,9 +56,12 @@ export const deleteUser = async (userId) => {
         method: 'DELETE'
     });
 
-    const result = await response.json();
+    if (response.ok) {
+        const result = await response.json();
 
-    console.log(result);
+        return result;
+    } else {
+        throw { message: 'Unable to delete user' };
+    }
 
-    return result;
 }   
